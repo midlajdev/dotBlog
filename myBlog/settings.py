@@ -52,6 +52,8 @@ INSTALLED_APPS = [
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
+    'whitenoise.middleware.WhiteNoiseMiddleware', 
+
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
@@ -59,6 +61,7 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
+STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
 ROOT_URLCONF = 'myBlog.urls'
 
@@ -84,11 +87,29 @@ WSGI_APPLICATION = 'myBlog.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/5.2/ref/settings/#databases
 
-DATABASES = {
-   'default': dj_database_url.config(
-        default=os.environ.get('DATABASE_URL')
-   )
-}
+# DATABASES = {
+#    'default': dj_database_url.config(
+#         default=os.environ.get('DATABASE_URL')
+#    )
+# }
+
+
+
+
+
+if DEBUG:
+    # Use SQLite locally
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.sqlite3',
+            'NAME': BASE_DIR / 'db.sqlite3',
+        }
+    }
+else:
+    # Use Render’s Postgres in production
+    DATABASES = {
+        'default': dj_database_url.config(default=config('DATABASE_URL'))
+    }
 
 
 # Password validation
