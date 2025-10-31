@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    {% load static %}
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Page not found — 404</title>
+    <link rel="stylesheet" href="{% static 'css/style.css' %}" />
+  </head>
+  <body>
+    <section id="home">
+      <section class="wrapper">
+        <header>
+        <h1>
+            <a href="#"><img src="{% static 'images/icons/blog-logo.svg' %}" alt="" style="width: 80px; margin-left: 24px;"></a>
+        </h1>
+        </header>
+        <section class="spotlight" style="min-height:60vh; display:flex; align-items:center; justify-content:center; padding:3rem 0;">
+          <div style="text-align:center; max-width:720px; margin:0 1rem;">
+            <h1 style="font-size:4rem; margin-bottom:0.5rem;">404</h1>
+            <h2 style="font-size:1.5rem; margin-bottom:1rem;">Page not found</h2>
+            <p style="color:#666; margin-bottom:1.5rem;">The page you're looking for doesn't exist or has been moved.</p>
+            <a href="{% url 'web:index' %}" class="login my-posts" style="display:inline-block; padding:0.6rem 1rem; text-decoration:none;">Go back home</a>
+          </div>
+        </section>
+
+      </section>
+    </section>
+  </body>
+</html>

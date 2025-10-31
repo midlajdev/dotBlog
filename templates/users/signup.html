@@ -1,0 +1,54 @@
+{% extends "users/auth_base.html" %} {% load static %}
+{% block content %}
+            <section class="form_container">
+                <div class="top">
+                    <h5>Signup Page</h5>
+                </div>
+                <div class="bottom">
+                    <form action="" method="post" >
+                        {% csrf_token %}
+                       
+
+                        <div class="input_container">
+                            <label for="id_firstName"> First Name </label>
+                            <input id="id_firstName" name="first_name" type="text" value="{{first_name|default:'' }}" required/>
+                        </div>
+                         <div class="input_container">
+                            <label for="id_lastName"> Last Name </label>
+                            <input id="id_lastName" name="last_name" type="text" value="{{last_name|default:'' }}" required/>
+                        </div>
+                        <div class="input_container">
+                            <label for="id_email"> Email </label>
+                            <input id="id_email" name="email" type="email" value="{{email|default:'' }}" required/>
+                        </div>
+                        <div class="input_container">
+                            <label for="id_password"> Password </label>
+                            <input 
+                                id="id_password" 
+                                name="password" 
+                                type="password" value="{{password|default:'' }}" required/>
+                        </div>
+                        <div class="input_container">
+                            <label for="id_password"> Confirm Password </label>
+                            <input 
+                                id="id_password" 
+                                name="confirm_password" 
+                                type="password" value="{{password|default:''}}" required/>
+                        </div>
+                        
+
+                        <div class="submit_container"> 
+                             {% if messages %}
+                                {% for message in messages %}
+                                <p class="error-message">{{message}}</p>
+                                {% endfor %}
+                            {% endif %}  
+                            
+                            <button type="submit">Create Account</button>
+
+                            <a href="{% url 'users:login' %}">Login</a>
+                        </div>
+                    </form>
+                </div>
+            </section>
+{% endblock %}

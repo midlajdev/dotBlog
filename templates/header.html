@@ -1,0 +1,36 @@
+{% load static %}
+
+
+<header>
+  <h1>
+    <a href="#"><img src="{% static 'images/icons/blog-logo.svg' %}" alt=""></a>
+  </h1>
+
+  <!-- Desktop Menu -->
+  <div id="desktop-icons">
+  {% if user.is_authenticated %}
+    <a href="{% url 'posts:create' %}" class="login my-posts {% if request.resolver_match.url_name == 'create' %}active{% endif %}">Create</a>
+    <a href="{% url 'posts:my-posts' %}" class="login my-posts {% if request.resolver_match.url_name == 'my-posts' %}active{% endif %}">My Posts</a>
+    <a href="{% url 'users:logout' %}" class="login my-posts">Logout</a>
+  {% else %}
+      <a href="{% url 'posts:create' %}" class="login my-posts">Create</a>
+    <a href="{% url 'users:login' %}" class="login my-posts">Login</a>
+  {% endif %}
+  </div>
+
+  <!-- Hamburger Icon -->
+  <div id="hamburger-icon">
+   <img src="{% static 'images/icons/Hamburger.svg' %}" alt="">
+  </div>
+</header>
+
+<!-- Overlay & Mobile Menu -->
+<div id="overlay"></div>
+
+<nav id="hamburger-menu">
+  <span id="close">&times;</span>
+  <a href="{% url 'posts:create' %}">Create</a>
+  <a href="{% url 'posts:my-posts' %}">My Posts</a>
+  <a href="{% url 'users:login' %}">Logout</a>
+  <span id="close">&times;</span>
+</nav>

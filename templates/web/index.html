@@ -1,0 +1,141 @@
+
+
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        {% load static %}
+        <meta charset="UTF-8" />
+        <title>Blog Post | Create your blog</title>
+        <link
+            rel="stylesheet"
+            href="{% static 'css/style.css' %}"
+            type="text/css"
+        />
+        <link
+            rel="icon"
+            type="image/png"
+            sizes="32x32"
+            href="{% static 'images/icons/blog-logo.svg' %}"
+        />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta property="og:image" content="" />
+        <meta name="description" content="" />
+        <meta name="keywords" content="" />
+        <script src="{% static 'js/jquery-3.6.0.min.js' %}"></script>
+        <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+        <script src="{% static 'js/script.js' %}"></script>
+    </head>
+    <body>
+        <section id="home">
+            <section class="wrapper">
+               {% include "header.html" %}
+                <section class="spotlight">
+                    <!-- <h3>Posts</h3> -->
+                    <div class="all-posts">
+                        <div class="post-section">
+                            <ul class="posts">
+                                {% for post in page_obj %}
+                                <li>
+                                    <a href="{% url 'web:post_detail' post.slug %}">
+                                        <div class="blog-image">
+                                             {% if post.featured_image %}
+                                                <img src="{{ post.featured_image.url }}" alt="{{ post.title }}">
+                                            {% else %}
+                                                <img src="{% static 'images/image/circuit.png' %}" alt="default image">
+                                            {% endif %}
+                                        </div>
+                                        <div class="details">
+                                            <div class="date">
+                                                <h4 class="name">{{ post.author.first_name }} {{ post.author.last_name }}</h4>
+                                                <div class="round"></div>
+                                                <span> {{post.created_at|date:"d-m-y" }} </span>
+                                            </div>
+                                            <h3 class="head">
+                                                {{post.title|truncatewords:6|safe}}
+                                            </h3>
+                                            <p class="description">
+                                                {{ post.description|striptags|truncatewords:20 }}
+                                            </p>
+                                        </div>
+                                    </a>
+                                </li>
+                                {% endfor %}
+                                
+                            </ul>
+
+                            <!-- Pagination -->
+                            <div class="pagination">
+                                {% if page_obj.has_previous %}
+                                <a href="?page={{ page_obj.previous_page_number }}" class="prev">
+                                    <span class="arrow">
+                                        <img
+                                            src="{% static 'images/icons/arrow.svg' %}"
+                                            alt="Arrow"
+                                        />
+                                    </span>
+        
+                                </a>
+                                 {% else %}
+                                    <div class="prev desabled">
+                                        <span class="arrow">
+                                            <img src="{% static 'images/icons/arrow.svg' %}" alt="arrow">
+                                        </span>
+            
+                                    </div>
+                                {% endif %}
+
+
+                                <div class="pages">
+                                    {% for num in page_obj.paginator.page_range %}
+                                        {% if page_obj.number == num %}
+                                            <span class="active">{{ num }}</span>
+                                        {% else %}
+                                            <a href="?page={{ num }}">{{ num }}</a>
+                                        {% endif %}
+                                    {% endfor %}
+                                </div>
+
+
+                                 {% if page_obj.has_next %}
+                                    <a href="?page={{ page_obj.next_page_number }}" class="next">
+                                        <span class="arrow">
+                                            <img src="{% static 'images/icons/arrow.svg' %}" alt="arrow">
+                                        </span>
+                                    </a>
+                                {% else %}
+                                    <div class="next desabled">
+                                        <span class="arrow">
+                                            <img src="{% static 'images/icons/arrow.svg' %}" alt="arrow">
+                                        </span>
+                                    </div>
+                                {% endif %}
+                            </div>
+                        </div>
+                    </div>
+                </section>
+                <div id="overlay"></div>
+                <div id="close">
+                    <img src="{% static 'images/icons/close.svg' %}" alt="Close" />
+                </div>
+            </section>
+        </section>
+        {% include "footer.html" %}
+    </body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

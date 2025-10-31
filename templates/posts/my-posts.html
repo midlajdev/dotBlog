@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        {% load static %}
+        <meta charset="UTF-8" />
+        <title>{{title}}</title>
+        <link
+            rel="stylesheet"
+            href="{% static 'css/style.css' %}"
+            type="text/css"
+        />
+        <link
+            rel="icon"
+            type="image/png"
+            sizes="32x32"
+            href="{% static 'images/icons/blog-logo.svg' %}"
+        />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta property="og:image" content="" />
+        <meta name="description" content="" />
+        <meta name="keywords" content="" />
+        <script src="{% static 'js/jquery-3.6.0.min.js' %}"></script>
+        <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+        <script src="{% static 'js/script.js' %}"></script>
+    </head>
+    <body>
+        <section id="my-posts-home">
+            <section class="wrapper">                
+                
+                {% include 'header.html' %}
+
+                <section class="spotlight">
+                    <!-- <h3>
+                        My Posts
+                    </h3> -->
+                    <ul class="posts">
+                        {% for post in posts %}
+                        <li class="post {% if post.is_draft %}draft{% endif %}">
+                            <div class="top">
+                                <h5 class="title">
+                                    {{ post.title|truncatewords:25|safe }}
+                                    {% if post.is_draft %}
+                                        <span class="draft-badge">Draft</span>
+                                    {% endif %}
+                                </h5>
+                                <div class="buttons">
+                                    <a 
+                                    href="{% url 'posts:delete_post' post.slug %}" 
+                                    class="danger action-button reload"
+                                    data-text="Are you sure want to remove this post. You can't undo this action." 
+                                    data-title="Confirm Delete!"
+                                    title="Delete!"
+                                >
+                                        <img src="{% static 'images/icons/delete.svg' %}" alt="Delete" />
+                                    </a>
+                                    <a href="{% url 'posts:edit_post' post.slug %}" class="warning"
+                                    title="edit!">
+                                        <img src="{% static 'images/icons/pencil.svg' %}" alt="Edit" />
+                                    </a>
+                                    <a 
+                                        href="{% url 'posts:draft_post' post.slug %}" 
+                                        class="success action-button reload"
+                                        data-text="{% if post.is_draft %}Are you sure you want to publish this post?{% else %}Are you sure you want to save this post as a draft?{% endif %}" 
+                                        data-title="{% if post.is_draft %}Publish Post{% else %}Save as Draft{% endif %}"
+                                        data-title="Confirm Status!"
+                                        title="Draft"
+                                    >
+                                        <img src="{% static 'images/icons/sheet.svg' %}" alt="Edit" />
+                                    </a>
+                                </div>
+                            </div>
+                            <p class="description">
+                                {{ post.description|striptags|truncatewords:40 }}
+                            </p>
+                            <div class="bottom">
+                                <a href="{% url 'web:post_detail' post.slug %}" class="view">
+                                    View
+                                    <span>
+                                        <img src="{% static 'images/icons/up-arrow.svg' %}" alt="Arrow">
+                                    </span>
+                                </a>
+                                <p class="date">
+                                    {{post.created_at | date:'d/m/y'}}
+                                </p>
+                            </div>
+                        </li>
+                        {% empty %}
+                        <p class="no-posts">
+                            You don't have any posts yet.
+                            <a href="{% url 'posts:create' %}">Create your first post</a>!
+                        </p>
+                        {% endfor %}
+                    </ul>
+                </section>
+            </section>
+        </section>
+        
+    </body>
+</html>
