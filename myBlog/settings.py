@@ -12,8 +12,6 @@ https://docs.djangoproject.com/en/5.2/ref/settings/
 from decouple import config
 import dj_database_url
 import os
-
-
 from pathlib import Path
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -27,7 +25,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = config('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = config('DEBUG', default=True, cast=bool )
+DEBUG = config('DEBUG', default=False, cast=bool )
 
 ALLOWED_HOSTS = ['*']
 
@@ -88,7 +86,7 @@ WSGI_APPLICATION = 'myBlog.wsgi.application'
 #https://docs.djangoproject.com/en/5.2/ref/settings/#databases
 
 DATABASES = {
-   'default': dj_database_url.config(default=os.environ.get('DATABASE_URL'))
+   'default': dj_database_url.config(default=config('DATABASE_URL'))
 }
 
 
